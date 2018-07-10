@@ -17,11 +17,15 @@ trait AnalysisService extends HttpService {
   val analysisRoute =
     path("analysis") {
       get {
+        val analysisDB = new AnalysisDB()
+
         respondWithMediaType(`text/html`) {
           complete {
+            val analyse = analysisDB.test().get.get
+            println(s"from Spray: ${analyse.head}")
             <html>
               <body>
-                <h1>SCIAS analysis service</h1>
+                <h1>SCIAS analysis service {analyse.head._3}</h1>
               </body>
             </html>
           }
